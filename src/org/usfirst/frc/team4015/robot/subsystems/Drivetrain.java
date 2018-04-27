@@ -2,58 +2,35 @@ package org.usfirst.frc.team4015.robot.subsystems;
 
 import org.usfirst.frc.team4015.robot.RobotMap;
 import org.usfirst.frc.team4015.robot.commands.Drive;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /* ===================================================
  * This class contains the methods required to drive 
- * the robot with a tank drive or mecanum drive chassis.
- * Mecanum drive methods are not programmed yet.
+ * the robot (tank drive).  The chassis uses 4 CIM 
+ * motors, each controlled by a Spark.  The left and
+ * right sparks are connected to the same PWM channel
+ * via Y-cables.
  * =================================================*/
 
 public class Drivetrain extends Subsystem
 {	
-	public Talon frontLeft;
-	public Talon frontRight;
-	public Talon backLeft;
-	public Talon backRight;
+	public Spark leftMotors;
+	public Spark rightMotors;
+	public DifferentialDrive chassis;
 	
-	public RobotDrive chassis;
-	//public MecanumDrive chassis;
-	
-	// DEFAULT CONSTRUCTOR //
+	// CONSTRUCTOR //
 	
 	public Drivetrain()
 	{
-		
+		leftMotors = new Spark(RobotMap.leftMotors);
+		rightMotors = new Spark(RobotMap.rightMotors);	
+		chassis = new DifferentialDrive(leftMotors, rightMotors);
 	}
 	
-	// CREATE TANK DRIVE CHASSIS //
-	
-	public void newTankDrive()
-	{
-		frontLeft = new Talon(RobotMap.leftMotors);
-		frontRight = new Talon(RobotMap.rightMotors);	
-		chassis = new RobotDrive(frontLeft, frontRight);
-	}
-	
-	// CREATE MECANUM DRIVE CHASSIS //
-	
-	public void newMecanumDrive()
-	{
-		frontLeft = new Talon(RobotMap.frontLeftMotor);
-		frontRight = new Talon(RobotMap.frontRightMotor);
-		backLeft = new Talon(RobotMap.backLeftMotor);
-		backRight = new Talon(RobotMap.backRightMotor);
-		//chassis = new MecanumDrive(frontLeft, backLeft, frontRight, backRight);
-	}
-	
-	/* =========== TANK DRIVE ===========
-	 * throttle ---> move value (Y value)
-	 * yaw ---> turn value (X value)
-	 * ================================*/
+	// TANK DRIVE //
 	
 	public void tankDrive(double throttle, double yaw)
 	{
@@ -67,37 +44,10 @@ public class Drivetrain extends Subsystem
 		tankDrive(0, 0);
 	}
 	
-	// MECANUM //
+	// SET DEFAULT COMMAND //
 	
-	/* ======================================
-	 *                DRIVE
-	 * ======================================                
-	 * ------------MECANUM DRIVE-------------
-	 * xSpeed ---> 1.0 = 100% right
-	 * xSpeed ---> -1.0 = 100% left
-	 * ySpeed ---> 1.0 = 100% forward
-	 * ySpeed ---> -1.0 = 100% backward
-	 * rotation ---> 1.0 = 100% CW
-	 * rotation ---> -1.0 = 100% CCW
-	 * 
-	 *---------------TANK DRIVE-------------
-	 * Same as mecanum but make xSpeed = 0.0
-	 * =====================================*/
-	/*
-	public void drive(double xSpeed, double ySpeed, double rotation)
-	{
-		chassis.driveCartesian(xSpeed, ySpeed, rotation);
-	}
-	
-	public void stop()
-	{
-		drive(0, 0, 0);
-	}
-	*/
-
 	public void initDefaultCommand()
 	{
-		// Set the default command for a subsystem here.
 		 setDefaultCommand(new Drive());
 	}
 }
