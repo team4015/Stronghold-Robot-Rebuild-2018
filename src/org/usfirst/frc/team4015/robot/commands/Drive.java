@@ -7,15 +7,13 @@ import org.usfirst.frc.team4015.robot.Robot;
 
 /* ===================================================
  * This command drives the robot with one or two 
- * joysticks on a tank drive chassis.  Mecanum to 
- * come soon.....
+ * joysticks on a tank drive chassis.
  * =================================================*/
 
 public class Drive extends Command
 {
 	public Drive()
 	{
-		// Use requires() here to declare subsystem dependencies
 		requires(Robot.drivetrain);
 	}
 
@@ -23,7 +21,7 @@ public class Drive extends Command
 	@Override
 	protected void initialize()
 	{
-		
+		Robot.drivetrain.stop();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -31,16 +29,12 @@ public class Drive extends Command
 	protected void execute()
 	{
 		// DUAL STICK (left stick ---> throttle, right stick ---> turning) //
-		Robot.drivetrain.tankDrive(OI.leftStick.getY(), OI.rightStick.getX());
+		// Robot.drivetrain.tankDrive(OI.leftStick.getY(), OI.rightStick.getX());
 		
 		// SINGLE STICK (left stick) //
-		// Robot.drivetrain.tankDrive(OI.leftStick.getY(), OI.leftStick.getX());
-		
-		// for mecanum drive, invoke mecanum drive methods here
+		Robot.drivetrain.tankDrive(OI.leftStick.getY(), OI.leftStick.getX());
 		
 		Timer.delay(0.05);  // motor update time
-		
-		// If throttle or steering is inverted, multiply X and Y values by -1
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
