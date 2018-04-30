@@ -28,7 +28,7 @@ public class MoveFlap extends Command
 	@Override
 	protected void execute()
 	{
-		if (OI.leftStick.getRawButton(2))
+		if (OI.leftStick.getRawButton(5))
 		{
 			Robot.flap.up();
 		}

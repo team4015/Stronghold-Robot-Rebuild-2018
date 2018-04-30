@@ -32,7 +32,7 @@ public class Drive extends Command
 		// Robot.drivetrain.tankDrive(OI.leftStick.getY(), OI.rightStick.getX());
 		
 		// SINGLE STICK (left stick) //
-		Robot.drivetrain.tankDrive(OI.leftStick.getY(), OI.leftStick.getX());
+		Robot.drivetrain.tankDrive((-1*OI.leftStick.getY()), OI.leftStick.getX());
 		
 		Timer.delay(0.05);  // motor update time
 	}
