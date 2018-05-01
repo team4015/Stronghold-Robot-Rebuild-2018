@@ -14,29 +14,41 @@ import edu.wpi.first.wpilibj.Victor;
 public class Flap extends Subsystem
 {
 	public Victor flapMotor;
+	private boolean up;
 	
 	// CONSTRUCTOR //
 	
 	public Flap()
 	{
 		flapMotor = new Victor(RobotMap.flapMotor);
+		up = false;
 	}
 	
-	// MOVE FLAP UP //
+	public boolean getUp()
+	{
+		return up;
+	}
+	
+	public void setUp(boolean up)
+	{
+		this.up = up;
+	}
+	
+	// MOVE UP //
 	
 	public void up()
 	{
-		flapMotor.set(0.5);
+		flapMotor.set(-0.5);
 	}
 	
-	// MOVE FLAP DOWN //
+	// MOVE DOWN //
 	
 	public void down()
 	{
-		flapMotor.set(-0.5);
+		flapMotor.set(0.5);
 	}
 
-	// STOP FLAP FROM MOVING //
+	// STOP FLAP //
 	
 	public void stop()
 	{
