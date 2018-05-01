@@ -1,13 +1,14 @@
 package org.usfirst.frc.team4015.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Timer;
 
 import org.usfirst.frc.team4015.robot.OI;
 import org.usfirst.frc.team4015.robot.Robot;
 
 /* ===================================================
- * This command moves the flap up and down using
- * joystick buttons
+ * This command moves the flap up and down using a
+ * joystick button.
  * =================================================*/
 
 public class MoveFlap extends Command
@@ -28,15 +29,21 @@ public class MoveFlap extends Command
 	@Override
 	protected void execute()
 	{
-		if (OI.leftStick.getRawButton(5))
+		if (OI.leftStick.getRawButton(1) && !Robot.flap.getUp()) // button = pressed & flap = DOWN ---> flap UP
 		{
 			Robot.flap.up();
+			Timer.delay(0.5);
+			Robot.flap.stop();
+			Robot.flap.setUp(true);
 		}
-		else if (OI.leftStick.getRawButton(3))
+		else if (!OI.leftStick.getRawButton(1) && Robot.flap.getUp()) // button = NOT pressed & flap = UP ---> flap DOWN
 		{
 			Robot.flap.down();
+			Timer.delay(0.5);
+			Robot.flap.stop();
+			Robot.flap.setUp(false);
 		}
-		else
+		else // button = NOT pressed & flap = DOWN  or  button = pressed & flap = up ---> STOP FLAP & DO NOTHING
 		{
 			Robot.flap.stop();
 		}
